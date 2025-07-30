@@ -138,6 +138,7 @@
 
 // export default LoginPage;
 
+//dashboard\src\sections\auth\Login.jsx
 "use client";
 import { useAuth } from "@/context/userContext";
 import ApiRequest from "@/utils/apiRequest";
@@ -277,3 +278,141 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
+// // ─── Login.jsx (dashboard/src/sections/auth/Login.jsx) ───────────────────
+// "use client";
+// import { useAuth } from "@/context/userContext";
+// import ApiRequest from "@/utils/apiRequest";
+// import {
+//   Box,
+//   Button,
+//   Paper,
+//   Stack,
+//   TextField,
+//   Typography,
+// } from "@mui/material";
+// import { useFormik } from "formik";
+// import { useRouter } from "next/navigation";
+// import { useSnackbar } from "notistack";
+// import { useEffect } from "react";
+// import * as Yup from "yup";
+
+// const validationSchema = Yup.object({
+//   email: Yup.string()
+//     .email("Invalid email")
+//     .required("Email is required"),
+//   password: Yup.string()
+//     .min(6, "Min 6 characters")
+//     .required("Password is required"),
+// });
+
+// export default function LoginPage() {
+//   const { isAuthenticated, setUser, setIsAuthenticated } = useAuth();
+//   const router = useRouter();
+//   const { enqueueSnackbar } = useSnackbar();
+
+//   useEffect(() => {
+//     if (isAuthenticated) {
+//       router.push("/");
+//     }
+//   }, [isAuthenticated, router]);
+
+//   const formik = useFormik({
+//     initialValues: { email: "", password: "" },
+//     validationSchema,
+//     onSubmit: async (values) => {
+//       try {
+//         const res = await ApiRequest.post("/user/login", values);
+//         const { user } = res.data.data;
+
+//         if (user.role === "admin") {
+//           setUser(user);
+//           setIsAuthenticated(true);
+//           enqueueSnackbar("Login successful", { variant: "success" });
+//           router.push("/");
+//         } else {
+//           enqueueSnackbar("Not authorized", { variant: "error" });
+//         }
+//       } catch (err) {
+//         enqueueSnackbar(err.response?.data?.message || "Login failed", {
+//           variant: "error",
+//         });
+//         setIsAuthenticated(false);
+//       }
+//     },
+//   });
+
+//   return (
+//     <Box
+//       sx={{
+//         display: "flex",
+//         alignItems: "center",
+//         justifyContent: "center",
+//         minHeight: "100vh",
+//         background: "#f5f5f5",
+//       }}
+//     >
+//       <Paper
+//         sx={{
+//           p: 6,
+//           borderRadius: 2,
+//           maxWidth: 400,
+//           width: "100%",
+//         }}
+//       >
+//         <Typography variant="h4" align="center" mb={3}>
+//           Admin Login
+//         </Typography>
+//         <Typography
+//           variant="body2"
+//           align="center"
+//           color="textSecondary"
+//           mb={3}
+//         >
+//           ** Only Admins may log in here
+//         </Typography>
+//         <form onSubmit={formik.handleSubmit}>
+//           <Stack spacing={2}>
+//             <TextField
+//               fullWidth
+//               id="email"
+//               name="email"
+//               label="Email"
+//               value={formik.values.email}
+//               onChange={formik.handleChange}
+//               error={
+//                 formik.touched.email && Boolean(formik.errors.email)
+//               }
+//               helperText={formik.touched.email && formik.errors.email}
+//             />
+//             <TextField
+//               fullWidth
+//               id="password"
+//               name="password"
+//               label="Password"
+//               type="password"
+//               value={formik.values.password}
+//               onChange={formik.handleChange}
+//               error={
+//                 formik.touched.password &&
+//                 Boolean(formik.errors.password)
+//               }
+//               helperText={
+//                 formik.touched.password && formik.errors.password
+//               }
+//             />
+//             <Button
+//               type="submit"
+//               variant="contained"
+//               fullWidth
+//               size="large"
+//             >
+//               Login
+//             </Button>
+//           </Stack>
+//         </form>
+//       </Paper>
+//     </Box>
+//   );
+// }
