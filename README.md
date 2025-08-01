@@ -38,7 +38,7 @@ PlaceMate is a responsive real estate listing platform built with React. It allo
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/placemate.git
+git clone (https://github.com/SumiSushmA/security-application-assignment.git)
 cd placemate
 
 # Install frontend dependencies
