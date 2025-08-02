@@ -148,7 +148,7 @@ const RegisterPage = () => {
             </div>
 
             <div className="md:w-6/12 w-11/12 mt-4">
-              <span className="text-sm font-medium text-gray-700">Type the characters you see below:</span>
+              <span className="text-sm font-medium text-gray-700">Fill what you see below:</span>
               <div className="flex items-center justify-between mt-1">
                 <div className="bg-gray-100 font-mono text-xl px-4 py-2 rounded select-none tracking-widest">
                   {captchaText}

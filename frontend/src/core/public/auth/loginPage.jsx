@@ -133,15 +133,19 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex w-full h-screen mx-auto max-w-[1300px] pt-8 px-6 pb-4">
-      <div className="w-full lg:w-6/12">
-        <Link to={"/"} className="-mt-2">
+    <div className="flex flex-col lg:flex-row w-full h-screen mx-auto max-w-[1300px] pt-8 px-6 pb-4">
+      <div className="w-full lg:w-6/12 relative bg-cover bg-center flex flex-col justify-between"
+        style={{ backgroundImage: `url(${wallpaper})`, borderRadius: "15%" }}>
+        <Link to="/" className="p-4">
           <img src={logo2} alt="Logo" className="cursor-pointer md:w-44 w-28" />
         </Link>
+      </div>
+
+      <div className="w-full lg:w-6/12 flex flex-col justify-center">
         {!twoFactorRequired ? (
           <form
             onSubmit={handleSubmit(submit)}
-            className="flex justify-center items-center flex-col md:mt-14 mt-20"
+            className="flex justify-center items-center flex-col"
           >
             <h1 className="text-2xl md:text-3xl font-ppMori mb-1 flex">Welcome to PlaceMate</h1>
             <h3>Please enter your credentials.</h3>
@@ -179,7 +183,7 @@ const LoginPage = () => {
             {errors.password && <h6 className="md:w-5/12 w-11/12 text-red-500 text-xs">{errors.password.message}</h6>}
 
             <div className="md:w-6/12 w-11/12 flex justify-end pt-3 pr-1">
-              <Link to={"/forgot-password"}>
+              <Link to="/forgot-password">
                 <h3 className="text-gray-500 cursor-pointer hover:text-black">Forgot password?</h3>
               </Link>
             </div>
@@ -214,7 +218,7 @@ const LoginPage = () => {
 
             <div className="md:w-6/12 w-11/12 flex justify-center pt-3 pr-1">
               <h3 className="text-gray-500">Don't have an account?</h3>
-              <Link to={"/Signup"}>
+              <Link to="/Signup">
                 <h3 className="text-purple-700 ml-1 cursor-pointer underline">Sign up</h3>
               </Link>
             </div>
@@ -244,11 +248,6 @@ const LoginPage = () => {
           </form>
         )}
       </div>
-
-      <div
-        className="lg:w-6/12 relative bg-cover bg-center"
-        style={{ backgroundImage: `url(${wallpaper})`, borderRadius: "15%" }}
-      ></div>
     </div>
   );
 };

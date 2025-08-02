@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store/auth";
 
@@ -65,3 +65,4 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+

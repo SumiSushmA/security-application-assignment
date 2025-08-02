@@ -6,7 +6,7 @@ import AddPropertyModal from "./AddPropertyModal";
 const PropertyHeroSection = ({ scrollToRecommendSection }) => {
   const { userInfo } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null); // for image popup
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const openModal = () => {
     if (userInfo) {
@@ -30,14 +30,14 @@ const PropertyHeroSection = ({ scrollToRecommendSection }) => {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-blue-50 to-white py-20 px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-        {/* Left: Text and CTA */}
+      <div className="bg-white py-20 px-6 md:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+        {/* Left Content */}
         <div className="space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-            Find Your Perfect Property Here!
+            Find Your Best Smart Real Estate
           </h1>
-          <p className="text-gray-600 text-lg">
-            Discover, compare, and connect with dream properties from around the country.
+          <p className="text-lg text-gray-600">
+            Find a home or space from our search box. Enter your specific location, property type and price range.
           </p>
           <div className="flex gap-4">
             <button
@@ -55,27 +55,39 @@ const PropertyHeroSection = ({ scrollToRecommendSection }) => {
           </div>
         </div>
 
-        {/* Right: Clickable Images */}
-        <div className="grid grid-cols-2 gap-4">
-          {["/images/house1.jpg", "/images/house2.jpg", "/images/house3.jpg"].map((src, index) => (
-            <img
-              key={index}
-              src={src}
-              onClick={() => handleImageClick(src)}
-              className="rounded-xl shadow-md hover:scale-105 transition cursor-pointer"
-              alt={`Property ${index + 1}`}
-            />
-          ))}
-          <div className="rounded-xl bg-white shadow-md flex items-center justify-center text-gray-500 font-semibold">
-            + More
+        {/* Right Content - Reference Style Image Section */}
+        <div className="relative w-full flex justify-center items-center">
+          <div className="relative">
+            <div className="rounded-[50%] overflow-hidden shadow-xl border border-gray-200 w-[320px] h-[400px]">
+              <img
+                src="/images/house1.jpg"
+                alt="Main Property"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Sub images on side */}
+            <div className="absolute top-1/2 -translate-y-1/2 -right-28 flex flex-col gap-4">
+              {["/images/house2.jpg", "/images/house3.jpg"].map((src, idx) => (
+                <div
+                  key={idx}
+                  className="w-24 h-20 rounded-xl overflow-hidden shadow-md hover:scale-105 transition cursor-pointer"
+                >
+                  <img
+                    src={src}
+                    alt={`Sub Property ${idx + 1}`}
+                    onClick={() => handleImageClick(src)}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Add Property Modal */}
       <AddPropertyModal showModal={showModal} closeModal={closeModal} />
 
-      {/* Image Lightbox Modal */}
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="relative max-w-3xl w-full mx-4">
@@ -94,3 +106,4 @@ const PropertyHeroSection = ({ scrollToRecommendSection }) => {
 };
 
 export default PropertyHeroSection;
+
