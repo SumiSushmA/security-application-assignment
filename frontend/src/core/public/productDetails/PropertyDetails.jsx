@@ -11,8 +11,8 @@ import SimpleMap from "../../../components/SimpleMap";
 import ChatModal from "../homePage/ChatModal";
 
 import { UserContext } from "../../../context/UserContext";
-import { handleChatNow, handleSaveProperty } from "../../../hooks/propertyActions"; // You can rename this to propertyActions.js
-import usePropertyDetails from "../../../hooks/usePropertyDetails"; // New hook
+import { handleChatNow, handleSaveProperty } from "../../../hooks/propertyActions";
+import usePropertyDetails from "../../../hooks/usePropertyDetails";
 
 const PropertyDetails = () => {
   const { propertyId } = useParams();

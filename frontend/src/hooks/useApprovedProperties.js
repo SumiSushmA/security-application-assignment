@@ -10,7 +10,7 @@ const useApprovedProperties = () => {
   const fetchProperties = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/api/book/get-approved-books"); // API expects books
+      const response = await axios.get("/api/book/get-approved-books"); 
       const properties = response?.data;
 
       setAllProperties(properties);

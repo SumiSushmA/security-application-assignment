@@ -9,7 +9,7 @@ const usePropertyDetails = (propertyId) => {
   const fetchPropertyDetails = async () => {
     try {
       const response = await axios.get(
-        `/api/book/get-book-by-id/${propertyId}` // Endpoint remains the same
+        `/api/book/get-book-by-id/${propertyId}`
       );
       const data = response?.data;
       setProperty(data);

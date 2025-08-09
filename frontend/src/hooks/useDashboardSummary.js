@@ -12,13 +12,15 @@ const useDashboardSummary = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get("/api/admin/dashboard-summary", {
+      const response = await axios.get("/api/admin/summary", {
         withCredentials: true,
       });
       setSummary(response.data);
-    } catch (error) {
-      console.error("Error fetching dashboard summary:", error);
-      setError(error.message);
+    } catch (err) {
+      console.error("Error fetching dashboard summary:", err);
+      setError(
+        err.response?.data?.message || err.message || "Failed to load summary"
+      );
     } finally {
       setLoading(false);
     }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
@@ -7,6 +8,9 @@ import App from "./App.jsx";
 import { UserProvider } from "./context/UserContext";
 import "./index.css";
 import store from "./store/index.js";
+
+// ensure axios sends cookies on proxied calls
+axios.defaults.withCredentials = true;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

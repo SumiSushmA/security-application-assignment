@@ -15,7 +15,7 @@ const Layout = lazy(() => import("./core/private/Layout"));
 const ErrorPage = lazy(() => import("./core/public/errorPage/ErrorPage"));
 const DashboardIndex = lazy(() => import("./core/private/dashboard"));
 const UserIndex = lazy(() => import("./core/private/user"));
-const BookListings = lazy(() => import("./core/private/bookListings")); // Keep as-is (backend route name)
+const BookListings = lazy(() => import("./core/private/bookListings"));
 const LoginPage = lazy(() => import("./core/public/auth/loginPage"));
 const RegisterPage = lazy(() => import("./core/public/auth/RegisterPage"));
 const ForgotPassword = lazy(() => import("./core/public/auth/ForgotPassword"));

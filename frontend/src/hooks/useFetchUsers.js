@@ -15,10 +15,12 @@ const useFetchUsers = () => {
       const response = await axios.get("/api/admin/users", {
         withCredentials: true,
       });
-      setUsers(response.data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      setError(error.message);
+      setUsers(response.data || []);
+    } catch (err) {
+      console.error("Error fetching users:", err);
+      setError(
+        err.response?.data?.message || err.message || "Failed to load users"
+      );
     } finally {
       setLoading(false);
     }
@@ -28,7 +30,7 @@ const useFetchUsers = () => {
     fetchUsers();
   }, []);
 
-  return { users, loading };
+  return { users, loading, error };
 };
 
 export default useFetchUsers;

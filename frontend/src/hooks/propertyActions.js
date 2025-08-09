@@ -7,7 +7,7 @@ export const handleSaveProperty = async (propertyId) => {
   try {
     const response = await axios.post(
       "/api/user/add-to-favorites",
-      { bookId: propertyId }, // backend expects bookId, keeping it unchanged
+      { bookId: propertyId }, 
       {
         withCredentials: true,
       }

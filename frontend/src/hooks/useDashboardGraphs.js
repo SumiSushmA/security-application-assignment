@@ -5,29 +5,35 @@ const useDashboardGraphs = () => {
   const [propertyListingsData, setPropertyListingsData] = useState([]);
   const [userActivityData, setUserActivityData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchGraphData = async () => {
+    try {
+      const [listingsRes, activityRes] = await Promise.all([
+        axios.get("/api/admin/book-listings-stats", {
+          withCredentials: true,
+        }),
+        axios.get("/api/admin/user-activity-stats", {
+          withCredentials: true,
+        }),
+      ]);
+      setPropertyListingsData(listingsRes.data || []);
+      setUserActivityData(activityRes.data || []);
+    } catch (err) {
+      console.error("Error fetching graph data:", err);
+      setError(
+        err.response?.data?.message || err.message || "Failed to load graphs"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchGraphData = async () => {
-      try {
-        // Fetch Property Listings Data
-        const bookResponse = await axios.get("/api/admin/book-listings-stats");
-        setPropertyListingsData(bookResponse.data); // renamed for UI clarity
-
-        // Fetch User Activity Data
-        const userResponse = await axios.get("/api/admin/user-activity-stats");
-        setUserActivityData(userResponse.data);
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching graph data:", error);
-        setLoading(false);
-      }
-    };
-
     fetchGraphData();
   }, []);
 
-  return { propertyListingsData, userActivityData, loading };
+  return { propertyListingsData, userActivityData, loading, error };
 };
 
 export default useDashboardGraphs;

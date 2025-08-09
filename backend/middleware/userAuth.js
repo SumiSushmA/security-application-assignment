@@ -9,7 +9,7 @@ const authenticateToken = async (req, res, next) => {
     return res.status(401).json({ message: "Authentication token required" });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, async (err, user) => { //Auth Failure
     if (err) {
       return res
         .status(403)

@@ -1,6 +1,8 @@
-const Book = require("../models/Book");
+const Property = require("../models/Property");
 const User = require("../models/User");
 
+// Normalize summary to match frontend field names:
+// totalBooksCount, booksPending, newUsersCount, newBooksCount
 const adminSummary = async (req, res) => {
   try {
     const oneWeekAgo = new Date();
@@ -10,19 +12,21 @@ const adminSummary = async (req, res) => {
       createdAt: { $gte: oneWeekAgo },
     });
 
-    const newBooksCount = await Book.countDocuments({
+    const newPropertiesCount = await Property.countDocuments({
       createdAt: { $gte: oneWeekAgo },
     });
 
-    const totalBooksCount = await Book.countDocuments();
+    const totalPropertiesCount = await Property.countDocuments();
 
-    const booksPending = await Book.countDocuments({ status: "Pending" });
+    const propertiesPending = await Property.countDocuments({
+      status: "Pending",
+    });
 
     res.status(200).json({
       newUsersCount,
-      newBooksCount,
-      totalBooksCount,
-      booksPending,
+      newBooksCount: newPropertiesCount,
+      totalBooksCount: totalPropertiesCount,
+      booksPending: propertiesPending,
     });
   } catch (error) {
     console.error("Error fetching summary data:", error);
@@ -40,7 +44,60 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// Aggregation: property listings per week
+const bookListingsStats = async (req, res) => {
+  try {
+    const data = await Property.aggregate([
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%V", date: "$createdAt" }, // year-week
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id": 1 } },
+    ]);
+    res.json(data);
+  } catch (err) {
+    console.error("Error in bookListingsStats:", err);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch property listings stats" });
+  }
+};
+
+// Aggregation: active users per week based on lastActivity
+const userActivityStats = async (req, res) => {
+  try {
+    const data = await User.aggregate([
+      {
+        $match: {
+          lastActivity: { $exists: true, $ne: null },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%V", date: "$lastActivity" },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id": 1 } },
+    ]);
+    res.json(data);
+  } catch (err) {
+    console.error("Error in userActivityStats:", err);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch user activity stats" });
+  }
+};
+
 module.exports = {
   adminSummary,
   getAllUsers,
+  bookListingsStats,
+  userActivityStats,
 };

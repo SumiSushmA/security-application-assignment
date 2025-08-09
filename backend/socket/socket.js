@@ -3,12 +3,12 @@ const http = require("http");
 const express = require("express");
 
 const app = express();
-
 const server = http.createServer(app);
+
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || "http://localhost:4000",
-    methods: ["GET", "POST"],
+    origin: ["http://localhost:4000", "https://localhost:4000"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   },
 });
@@ -27,7 +27,7 @@ const emitNotification = (userId, notification) => {
 };
 
 io.on("connection", (socket) => {
-  // console.log("a user connected", socket.id);
+  console.log("a user connected", socket.id);
 
   const userId = socket.handshake.query.userId;
   const token = socket.handshake.auth.token;
@@ -54,7 +54,10 @@ io.on("connection", (socket) => {
   socket.on("notificationRead", (notificationId) => {
     console.log("Notification read:", notificationId);
   });
+
+  socket.on("connect_error", (err) => {
+    console.error("Socket connection error:", err.message);
+  });
 });
 
 module.exports = { app, server, io, getReceiverSocketId, emitNotification };
-

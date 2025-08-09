@@ -32,32 +32,51 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const { summary } = useDashboardSummary();
-  const { users, loading } = useFetchUsers();
+  const { summary, loading: summaryLoading, error: summaryError } =
+    useDashboardSummary();
+  const { users = [], loading: usersLoading } = useFetchUsers();
+  const {
+    propertyListingsData = [],
+    userActivityData = [],
+    loading: graphsLoading,
+    error: graphsError,
+  } = useDashboardGraphs();
 
-  const { bookListingsData, userActivityData } = useDashboardGraphs();
+  if (summaryLoading) {
+    return <div className="p-8">Loading dashboard...</div>;
+  }
+  if (summaryError) {
+    return (
+      <div className="p-8 text-red-600">
+        Failed to load dashboard summary: {summaryError}
+      </div>
+    );
+  }
+
+  const safeBookListings = Array.isArray(propertyListingsData)
+    ? propertyListingsData
+    : [];
+  const safeUserActivity = Array.isArray(userActivityData)
+    ? userActivityData
+    : [];
 
   const bookListingsGraphData = {
-    labels: bookListingsData.map((item) => `Week ${item._id}`),
+    labels: safeBookListings.map((item) => `Week ${item._id}`),
     datasets: [
       {
         label: "Properties Listed",
-        data: bookListingsData.map((item) => item.count),
-        backgroundColor: "rgba(54, 162, 235, 0.6)",
-        borderColor: "rgba(54, 162, 235, 1)",
+        data: safeBookListings.map((item) => item.count),
         borderWidth: 1,
       },
     ],
   };
 
   const userActivityGraphData = {
-    labels: userActivityData.map((item) => `Week ${item._id}`),
+    labels: safeUserActivity.map((item) => `Week ${item._id}`),
     datasets: [
       {
         label: "Active Users",
-        data: userActivityData.map((item) => item.count),
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        data: safeUserActivity.map((item) => item.count),
         borderWidth: 1,
       },
     ],
@@ -66,7 +85,7 @@ const Dashboard = () => {
   const summaryCards = [
     {
       id: 1,
-      value: summary?.totalBooksCount,
+      value: summary?.totalBooksCount ?? 0,
       label: "Total Listings",
       bgColor: "bg-red-100",
       icon: <FaCartShopping />,
@@ -75,17 +94,17 @@ const Dashboard = () => {
     },
     {
       id: 2,
-      value: summary?.booksPending,
+      value: summary?.booksPending ?? 0,
       label: "Listings Pending",
       bgColor: "bg-yellow-100",
       icon: <FaSackDollar />,
       iconBgColor: "bg-yellow-500",
       link: "/admin/booklistings",
-      showDot: summary?.booksPending > 0,
+      showDot: (summary?.booksPending ?? 0) > 0,
     },
     {
       id: 3,
-      value: summary?.newUsersCount,
+      value: summary?.newUsersCount ?? 0,
       label: "New Users",
       bgColor: "bg-purple-100",
       icon: <FaUserPlus />,
@@ -94,7 +113,7 @@ const Dashboard = () => {
     },
     {
       id: 4,
-      value: summary?.newBooksCount,
+      value: summary?.newBooksCount ?? 0,
       label: "New Properties Added",
       bgColor: "bg-green-100",
       icon: <FaBook />,
@@ -103,9 +122,11 @@ const Dashboard = () => {
     },
   ];
 
-  const recentUsers = users
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    .slice(0, 3);
+  const recentUsers = Array.isArray(users)
+    ? users
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 3)
+    : [];
 
   const columnHelper = createColumnHelper();
 
@@ -118,6 +139,9 @@ const Dashboard = () => {
             src={`/api/uploads/users/${info.getValue()}`}
             alt="Avatar"
             className="w-8 h-8 rounded-full object-cover"
+            onError={(e) => {
+              e.currentTarget.src = "/fallback_avatar.png";
+            }}
           />
           <div className="ml-3">
             <p className="text-sm font-medium text-gray-900">
@@ -167,8 +191,8 @@ const Dashboard = () => {
   return (
     <div className="px-4 py-1.5 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold">Dashboard</h1>
-      {loading ? (
-        <div></div>
+      {usersLoading ? (
+        <div>Loading users...</div>
       ) : (
         <div>
           <div className="bg-white rounded-xl px-6 pt-3 pb-6 mt-4">

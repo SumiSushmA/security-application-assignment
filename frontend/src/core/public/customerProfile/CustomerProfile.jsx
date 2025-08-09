@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import BottomNavBar from "../../../components/BottomNavBar";
 import Navbar from "../../../components/Navbar";
 import useUserBooks from "../../../hooks/useUserBooks";
-import BookCard from "../homePage/PropertyCard"; // Reuse but represents properties now
+import BookCard from "../homePage/PropertyCard";
 
 const CustomerProfile = () => {
   const { userId } = useParams();

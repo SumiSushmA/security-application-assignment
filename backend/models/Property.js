@@ -1,24 +1,25 @@
 const mongoose = require("mongoose");
 
-const bookSchema = mongoose.Schema(
+const propertySchema = mongoose.Schema( //insecure design
   {
     title: {
       type: String,
       required: true,
       trim: true,
     },
-    genre: {
+    type: {
       type: String,
       enum: [
-        "Arts & Photography",
-        "Fiction",
-        "Non Fiction & Biography",
-        "Educational Textbook",
-        "Magazines & Comics",
-        "Technology",
-        "Romance",
+        "Apartment",
+        "House",
+        "Commercial Space",
+        "Land",
+        "Villa",
+        "Room",
+        "Flat",
         "Other",
       ],
+      required: true,
     },
     description: { type: String },
     price: {
@@ -26,9 +27,9 @@ const bookSchema = mongoose.Schema(
       required: true,
       min: 0,
     },
-    condition: {
+    furnishing: {
       type: String,
-      enum: ["Brand New", "Like New", "Used", "Acceptable"],
+      enum: ["Fully Furnished", "Semi Furnished", "Unfurnished"],
       required: true,
     },
     images: {
@@ -42,7 +43,7 @@ const bookSchema = mongoose.Schema(
     },
     delivery: {
       type: Boolean,
-      default: false,
+      default: false, // Optional: You can rename to "homeVisit" or "siteVisitAvailable" if more suitable
     },
     status: {
       type: String,
@@ -58,4 +59,4 @@ const bookSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Book", bookSchema);
+module.exports = mongoose.model("Property", propertySchema);

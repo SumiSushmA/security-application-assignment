@@ -8,7 +8,7 @@ import { LuSearch } from "react-icons/lu";
 import { MdOutlineSell } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../context/UserContext";
-import useUserProperties from "../../../hooks/useUserProperties"; // renamed hook
+import useUserProperties from "../../../hooks/useUserProperties"; 
 import AddBookModal from "../homePage/AddPropertyModal";
 import notAvailable from "/BG/notAvailable.svg";
 

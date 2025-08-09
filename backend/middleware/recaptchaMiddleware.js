@@ -1,4 +1,3 @@
-// module.exports = { verifyCaptcha };
 const verifyCaptcha = async (req, res, next) => {
   try {
     const { captchaAnswer, captchaText } = req.body;

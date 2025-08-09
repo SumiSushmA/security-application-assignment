@@ -1,4 +1,3 @@
-// AddPropertyModal.jsx (Fully Redesigned with Animation and Appeal)
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -75,13 +74,22 @@ const AddPropertyModal = ({ showModal, closeModal, editBook = null }) => {
     try {
       let response;
       if (editBook) {
-        response = await axios.patch(`/api/book/update-book/${editBook._id}`, form, { headers });
+        response = await axios.patch(`/api/property/update-property/${editBook._id}`, form, { headers });
         toast.success("Property updated successfully");
       } else {
-        response = await axios.post("/api/book/post-book", form, { headers });
+        response = await axios.post("/api/property/post-property", form, { headers });
         toast.success("Property posted successfully");
       }
-      setFormData({ title: "", genre: "", description: "", price: "", condition: "", delivery: false, images: [] });
+
+      setFormData({
+        title: "",
+        genre: "",
+        description: "",
+        price: "",
+        condition: "",
+        delivery: false,
+        images: [],
+      });
       closeModal();
     } catch (error) {
       console.error(error);
@@ -113,6 +121,7 @@ const AddPropertyModal = ({ showModal, closeModal, editBook = null }) => {
             &times;
           </button>
         </div>
+
         <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in delay-100">
           <div>
             <label className="block text-sm font-medium mb-1">Property Title</label>

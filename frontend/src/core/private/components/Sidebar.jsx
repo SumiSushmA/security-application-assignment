@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { createContext, useContext } from "react";
 import { FaShieldAlt } from "react-icons/fa";
-import { FaBook } from "react-icons/fa6"; // Optional: Replace with a house icon for real estate
+import { FaBook } from "react-icons/fa6"; 
 import { FiSettings, FiUsers } from "react-icons/fi";
 import { PiChartLine } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";

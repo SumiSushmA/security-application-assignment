@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserContext";
 
 const useUpdateUserStatus = () => {
   const { userInfo } = useContext(UserContext);
-  const userId = userInfo?._id; // or userInfo.id depending on backend
+  const userId = userInfo?._id; 
 
   useEffect(() => {
     const updateUserStatus = async () => {

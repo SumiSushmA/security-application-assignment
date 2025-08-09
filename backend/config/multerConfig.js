@@ -15,7 +15,7 @@ const createUploadsDirectories = () => {
 
 createUploadsDirectories();
 
-// Multer file filter
+// Multer file filter //integrity failure
 const fileFilter = (req, file, cb) => {
   // Accept only images
   if (file.mimetype.startsWith("image/")) {

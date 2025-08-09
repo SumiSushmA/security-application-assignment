@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema(
     role: { type: String, default: "user", enum: ["user", "admin"] },
     book_listings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],
     purchases: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Property" }],
     notifications: { type: Boolean, default: true },
     status: {
       type: String,

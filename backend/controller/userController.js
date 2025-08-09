@@ -81,7 +81,7 @@ const signUp = async (req, res) => {
     if (validationError) {
       return res.status(400).json({ message: validationError });
     }
-    const hashedPass = await bcrypt.hash(password, 10);
+    const hashedPass = await bcrypt.hash(password, 10); // usercontroller
 
     const userData = {
       name,

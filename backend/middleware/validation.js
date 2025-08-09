@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const xss = require("xss");
 
-// Input sanitization middleware
+// Input sanitization middleware //nosql injection
 const sanitizeInput = (req, res, next) => {
   if (req.body) {
     Object.keys(req.body).forEach((key) => {

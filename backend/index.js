@@ -4,7 +4,7 @@ const { app, server } = require("./socket/socket");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const userRoutes = require("./router/userRoutes");
-const bookRoutes = require("./router/bookRoutes");
+const propertyRoutes = require("./router/propertyRoutes");
 const messageRoutes = require("./router/messageRoutes");
 const notificationRoutes = require("./router/notificationRoutes");
 const adminRoutes = require("./router/adminRoutes");
@@ -30,7 +30,7 @@ requiredEnvVars.forEach((envVar) => {
 
 app.use(
   cors({
-    origin: "http://localhost:4000",
+    origin: ["https://localhost:4000"], //security misconfiguration
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
@@ -42,11 +42,14 @@ app.use(cookieParser());
 applySecurityMiddlewares(app);
 
 app.use("/api/user", userRoutes);
-app.use("/api/book", bookRoutes);
+app.use("/api/property", propertyRoutes);
+
 app.use("/api/messages", messageRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/activity-logs", activityLogRoutes);
+app.use("/uploads", express.static("uploads")); // <-- already present
+
 
 app.use("/api/product_images", express.static("product_images"));
 app.use("/api/uploads/users", express.static("uploads/users"));

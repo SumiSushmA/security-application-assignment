@@ -168,7 +168,7 @@ const logSecurityEvent = async (req, eventType, details = {}) => {
   }
 };
 
-// Middleware to log all requests
+// Middleware to log all requests //Logging and Monitoring
 const logAllRequests = (req, res, next) => {
   const startTime = Date.now();
 

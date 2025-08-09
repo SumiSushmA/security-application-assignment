@@ -1,4 +1,3 @@
-// Footer.jsx (Improved Headings & Icons in Features)
 import { FaCheckCircle, FaEnvelope, FaFacebookF, FaInstagram, FaLinkedinIn, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 
 const Footer = () => {
